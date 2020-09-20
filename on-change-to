@@ -1,0 +1,12 @@
+#!/bin/sh
+
+path=${1%/*}
+echo "Watching path:'$path' for changes to file '$1', upon changes running '$2'"
+inotifywait -e close_write -m $path |
+while read -r directory events filename; do
+  echo "Events detected: $path/$filename:$events"
+  if [ "$path/$filename" == $1 ] && [ "$events" == "CLOSE_WRITE,CLOSE" ]; then
+    echo "Executing $2"
+    $2
+  fi
+done

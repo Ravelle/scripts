@@ -1,0 +1,6 @@
+#!/bin/sh
+pidof dunst && killall dunst
+dunst &
+notify-send -u low "Low priority" "notification text"
+notify-send -u normal "Normal priority" "notification text"
+notify-send -u critical "Critical priority" "notification text"
